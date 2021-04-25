@@ -130,28 +130,47 @@ const viewByDept = () => {
             continueOrExit();
         })
       }
-      else {
-        connection.end();
-      }
     });
 };
 
 
 const viewByManager = () => {
-    connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name 
-    AS department, role.salary, 
-    CONCAT(manager.first_name, " ", manager.last_name) 
-    AS manager
-    FROM employee 
-    LEFT JOIN employee manager on manager.id = employee.manager_id
-    INNER JOIN role 
-    ON (role.id = employee.role_id) 
-    INNER JOIN department 
-    ON (department.id = role.department_id)
-    ORDER BY manager.id`, (err, results) => {
-        if (err) throw err;
-        console.table(results);
-        continueOrExit();
+    inquirer
+    .prompt({
+      name: 'chooseManager',
+      type: 'list',
+      message: 'Choose a manager:',
+      choices: ['Ashley Rodriguez', 
+      'John Doe', 
+      'Mike Chan', 
+      'Sarah Lourd']
+    })
+    .then((answer) => {
+        if(answer.chooseManager === 'Ashley Rodriguez') {
+            connection.query('SELECT * FROM employee WHERE manager_id=3', (err, results) => {
+                if (err) throw err;
+                console.table(results);
+                continueOrExit();
+            })
+        } else if(answer.chooseManager === 'John Doe') {
+            connection.query('SELECT * FROM employee WHERE manager_id=1', (err, results) => {
+                if (err) throw err;
+                console.table(results);
+                continueOrExit();
+            })
+        } else if(answer.chooseManager === 'Mike Chan') {
+            connection.query('SELECT * FROM employee WHERE manager_id=2', (err, results) => {
+                if (err) throw err;
+                console.table(results);
+                continueOrExit();
+            })
+        } else if(answer.chooseManager === 'Sarah Lourd') {
+            connection.query('SELECT * FROM employee WHERE manager_id=6', (err, results) => {
+                if (err) throw err;
+                console.table(results);
+                continueOrExit();
+            })
+        }
     })
 };
 
