@@ -106,56 +106,34 @@ const viewByDept = () => {
     })
     .then((answer) => {
       if (answer.chooseDept === 'Engineering') {
-        viewEngineerDept();
-      } else if (answer.chooseAction === 'Finance') {
-        viewFinanceDept();
-      } else if (answer.chooseAction === 'Legal'){
-        viewLegalDept();
-      } else if (answer.chooseAction === 'Sales'){
-        viewSalesDept();
+        connection.query('SELECT * FROM employee WHERE role_id in (3, 4)', (err, results) => {
+            if (err) throw err;
+            console.table(results);
+            continueOrExit();
+        })
+      } else if (answer.chooseDept === 'Finance') {
+        connection.query('SELECT * FROM employee WHERE role_id=5', (err, results) => {
+            if (err) throw err;
+            console.table(results);
+            continueOrExit();
+        })
+      } else if (answer.chooseDept === 'Legal'){
+        connection.query('SELECT * FROM employee WHERE role_id in (6, 7)', (err, results) => {
+            if (err) throw err;
+            console.table(results);
+            continueOrExit();
+        })
+      } else if (answer.chooseDept === 'Sales'){
+        connection.query('SELECT * FROM employee WHERE role_id in (1, 2)', (err, results) => {
+            if (err) throw err;
+            console.table(results);
+            continueOrExit();
+        })
       }
       else {
         connection.end();
       }
     });
-};
-
-
-const viewEngineerDept = () => {
-    connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name 
-    AS department, role.salary, 
-    CONCAT(manager.first_name, " ", manager.last_name) 
-    AS manager
-    FROM employee 
-    LEFT JOIN employee manager on manager.id = employee.manager_id
-    INNER JOIN role 
-    ON (role.id = employee.role_id) 
-    INNER JOIN department 
-    ON (department.id = role.department_id)
-    ORDER BY department`, (err, results) => {
-        if (err) throw err;
-        console.table(results);
-        continueOrExit();
-    })
-};
-
-
-const viewFinanceDept = () => {
-    connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name 
-    AS department, role.salary, 
-    CONCAT(manager.first_name, " ", manager.last_name) 
-    AS manager
-    FROM employee 
-    LEFT JOIN employee manager on manager.id = employee.manager_id
-    INNER JOIN role 
-    ON (role.id = employee.role_id) 
-    INNER JOIN department 
-    ON (department.id = role.department_id)
-    ORDER BY department`, (err, results) => {
-        if (err) throw err;
-        console.table(results);
-        continueOrExit();
-    })
 };
 
 
