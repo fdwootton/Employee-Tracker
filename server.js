@@ -46,9 +46,6 @@ const start = () => {
             console.log('Good-Bye!');
             connection.end();
         }
-        else {
-          connection.end();
-        }
       });
 };
 
@@ -195,205 +192,29 @@ const addEmployee = () => {
         {
             name: 'employeeRole',
             type: 'list',
-            message: "Select employee's role:",
-            choices: ['Salesperson', 
-            'Sales Lead', 
-            'Software Engineer', 
-            'Lead Engineer',
-            'Lawyer', 
-            'Legal Team Lead',
-            'Accountant']
+            message: "Select employee's role ID:",
+            choices: [1, 2, 3, 4, 5, 6, 7]
         },
         {
             name: 'employeeManager',
             type: 'list',
-            message: "Select employee's manager:",
-            choices: ['Ashley Rodriguez', 
-            'Mike Chan', 
-            'John Doe', 
-            'Sarah Lourde',
-            'None']
+            message: "Select employee's manager ID:",
+            choices: [1, 2, 3, 4]
         }
       ])
       .then((answer) => {
         connection.query(
-          'INSERT INTO employee SET ?',
-          {
-            item_name: answer.item,
-            category: answer.category,
-            starting_bid: answer.startingBid || 0,
-            highest_bid: answer.startingBid || 0,
-          },
-          (err) => {
+          `INSERT INTO employee (first_name, last_name, manager_id, role_id)
+          VALUES (${answer.employeeFirstName}, ${answer.employeeLastName}, ${answer.employeeManager}, ${answer.updateEmployeeRole})`,
+          (err, results) => {
             if (err) throw err;
-            console.log('Your auction was created successfully!');
-            start();
+            console.log(results);
           }
         );
+        
+        // console.log('Employee successfully added!')
+        continueOrExit();
       });
-};
-
-const addDept = () => {
-inquirer
-    .prompt([
-    {
-        name: 'employeeFirstName',
-        type: 'input',
-        message: "Enter employee's first name:",
-    },
-    {
-        name: 'employeeLastName',
-        type: 'input',
-        message: "Enter employee's last name:",
-    },
-    {
-        name: 'employeeRole',
-        type: 'list',
-        message: "Select employee's role:",
-        choices: ['Salesperson', 
-        'Sales Lead', 
-        'Software Engineer', 
-        'Lead Engineer',
-        'Lawyer', 
-        'Legal Team Lead',
-        'Accountant']
-    },
-    {
-        name: 'employeeManager',
-        type: 'list',
-        message: "Select employee's manager:",
-        choices: ['Ashley Rodriguez', 
-        'Mike Chan', 
-        'John Doe', 
-        'Sarah Lourde',
-        'None']
-    }
-    ])
-    .then((answer) => {
-    connection.query(
-        'INSERT INTO employee SET ?',
-        {
-        item_name: answer.item,
-        category: answer.category,
-        starting_bid: answer.startingBid || 0,
-        highest_bid: answer.startingBid || 0,
-        },
-        (err) => {
-        if (err) throw err;
-        console.log('Your auction was created successfully!');
-        start();
-        }
-    );
-    });
-};
-
-const addRole = () => {
-inquirer
-    .prompt([
-    {
-        name: 'employeeFirstName',
-        type: 'input',
-        message: "Enter employee's first name:",
-    },
-    {
-        name: 'employeeLastName',
-        type: 'input',
-        message: "Enter employee's last name:",
-    },
-    {
-        name: 'employeeRole',
-        type: 'list',
-        message: "Select employee's role:",
-        choices: ['Salesperson', 
-        'Sales Lead', 
-        'Software Engineer', 
-        'Lead Engineer',
-        'Lawyer', 
-        'Legal Team Lead',
-        'Accountant']
-    },
-    {
-        name: 'employeeManager',
-        type: 'list',
-        message: "Select employee's manager:",
-        choices: ['Ashley Rodriguez', 
-        'Mike Chan', 
-        'John Doe', 
-        'Sarah Lourde',
-        'None']
-    }
-    ])
-    .then((answer) => {
-    connection.query(
-        'INSERT INTO employee SET ?',
-        {
-        item_name: answer.item,
-        category: answer.category,
-        starting_bid: answer.startingBid || 0,
-        highest_bid: answer.startingBid || 0,
-        },
-        (err) => {
-        if (err) throw err;
-        console.log('Your auction was created successfully!');
-        start();
-        }
-    );
-    });
-};
-  
-
-const updateEmployeeRole = () => {
-    inquirer
-        .prompt([
-        {
-            name: 'employeeFirstName',
-            type: 'input',
-            message: "Enter employee's first name:",
-        },
-        {
-            name: 'employeeLastName',
-            type: 'input',
-            message: "Enter employee's last name:",
-        },
-        {
-            name: 'employeeRole',
-            type: 'list',
-            message: "Select employee's role:",
-            choices: ['Salesperson', 
-            'Sales Lead', 
-            'Software Engineer', 
-            'Lead Engineer',
-            'Lawyer', 
-            'Legal Team Lead',
-            'Accountant']
-        },
-        {
-            name: 'employeeManager',
-            type: 'list',
-            message: "Select employee's manager:",
-            choices: ['Ashley Rodriguez', 
-            'Mike Chan', 
-            'John Doe', 
-            'Sarah Lourde',
-            'None']
-        }
-        ])
-        .then((answer) => {
-            connection.query(
-                'INSERT INTO employee SET ?',
-                {
-                item_name: answer.item,
-                category: answer.category,
-                starting_bid: answer.startingBid || 0,
-                highest_bid: answer.startingBid || 0,
-                },
-                (err) => {
-                if (err) throw err;
-                console.log('Your auction was created successfully!');
-                start();
-                }
-            );
-        });
 };
 
 
