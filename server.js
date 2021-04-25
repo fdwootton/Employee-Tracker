@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+require('console.table');
+
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -24,7 +26,8 @@ const start = () => {
         message: 'What would you like to do?',
         choices: ['View All Employees', 
         'View All Employees By Department', 
-        'View All Employees By Manager'],
+        'View All Employees By Manager', 
+        'Exit'],
       })
       .then((answer) => {
         if (answer.chooseAction === 'View All Employees') {
@@ -33,6 +36,9 @@ const start = () => {
           viewByDept();
         } else if (answer.chooseAction === 'View All Employees By Manager'){
           viewByManager();
+        } else if (answer.chooseAction === 'Exit'){
+            console.log('Good-Bye!');
+            connection.end();
         }
         else {
           connection.end();
@@ -42,7 +48,10 @@ const start = () => {
 
 
   const viewAllEmployees = () => {
-      connection.query('SELECT * FROM employee_db.employee')
+      connection.query('SELECT * FROM employee_db.employee', (err, results) => {
+          if (err) throw err;
+          console.log(results);
+      })
   }
 
   connection.connect((err) => {
