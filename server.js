@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-require('console.table');
+// require('console.table');
+const cTable = require('console.table');
 
 
 const connection = mysql.createConnection({
@@ -44,18 +45,41 @@ const start = () => {
           connection.end();
         }
       });
-  };
+};
 
 
-  const viewAllEmployees = () => {
-      connection.query('SELECT * FROM employee_db.employee', (err, results) => {
-          if (err) throw err;
-          console.log(results);
+const viewAllEmployees = () => {
+    const query = connection.query('SELECT * FROM employee_db.employee', (err, results) => {
+        if (err) throw err;
+        console.table(results);
+        continueOrExit();
+    })
+};
+
+
+const continueOrExit = () => {
+    inquirer
+      .prompt({
+        name: 'continueOrExit',
+        type: 'list',
+        message: 'Would you like to continue or exit?',
+        choices: ['Continue', 
+        'Exit']
       })
-  }
+      .then((answer) => {
+        if (answer.continueOrExit === 'Continue') {
+          start();
+        }
+        else {
+          console.log('Good-Bye!')
+          connection.end();
+        }
+      });
+};
 
-  connection.connect((err) => {
-    if (err) throw err;
-    console.log(`Welcome to the Employee Tracker!`);
-    start();
-  });
+
+connection.connect((err) => {
+if (err) throw err;
+console.log(`Welcome to the Employee Tracker!`);
+start();
+});
