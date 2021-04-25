@@ -5,14 +5,8 @@ const cTable = require('console.table');
 
 const connection = mysql.createConnection({
     host: 'localhost',
-  
-    // Your port; if not 3306
     port: 3306,
-  
-    // Your username
     user: 'root',
-  
-    // Your password
     password: 'rooT1518!',
     database: 'employee_db',
 });
@@ -40,6 +34,8 @@ const start = () => {
           viewByDept();
         } else if (answer.chooseAction === 'View All Employees By Manager'){
           viewByManager();
+        } else if (answer.chooseAction === 'Add Employee'){
+          addEmployee();
         } else if (answer.chooseAction === 'Exit'){
             console.log('Good-Bye!');
             connection.end();
@@ -213,6 +209,63 @@ const viewByManager = () => {
     })
 };
 
+
+const addEmployee = () => {
+    inquirer
+      .prompt([
+        {
+          name: 'employeeFirstName',
+          type: 'input',
+          message: "Enter employee's first name:",
+        },
+        {
+          name: 'employeeLastName',
+          type: 'input',
+          message: "Enter employee's last name:",
+        },
+        {
+            name: 'employeeRole',
+            type: 'list',
+            message: "Select employee's role:",
+            choices: ['Salesperson', 
+            'Sales Lead', 
+            'Software Engineer', 
+            'Lead Engineer',
+            'Lawyer', 
+            'Legal Team Lead',
+            'Accountant']
+        },
+        {
+            name: 'employeeManager',
+            type: 'list',
+            message: "Select employee's manager:",
+            choices: ['Ashley Rodriguez', 
+            'Mike Chan', 
+            'John Doe', 
+            'Sarah Lourde',
+            'None']
+        }
+      ])
+      .then((answer) => {
+        connection.query(
+          'INSERT INTO employee SET ?',
+          // QUESTION: What does the || 0 do?
+          {
+            item_name: answer.item,
+            category: answer.category,
+            starting_bid: answer.startingBid || 0,
+            highest_bid: answer.startingBid || 0,
+          },
+          (err) => {
+            if (err) throw err;
+            console.log('Your auction was created successfully!');
+            // re-prompt the user for if they want to bid or post
+            start();
+          }
+        );
+      });
+  };
+  
 
 connection.connect((err) => {
 if (err) throw err;
