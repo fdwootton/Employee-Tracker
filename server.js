@@ -106,31 +106,29 @@ const viewByDept = () => {
     })
     .then((answer) => {
       if (answer.chooseDept === 'Engineering') {
-        connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title
-        FROM employee
-        INNER JOIN role 
-        ON role.id = employee.role_id 
-        INNER JOIN department 
-        ON department.id = role.department_id
-        ORDER BY employee.id`, (err, results) => {
+        connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE role_id in (3, 4)', 
+        (err, results) => {
             if (err) throw err;
             console.table(results);
             continueOrExit();
         })
       } else if (answer.chooseDept === 'Finance') {
-        connection.query('SELECT * FROM employee WHERE role_id=5', (err, results) => {
+        connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE role_id=5', 
+        (err, results) => {
             if (err) throw err;
             console.table(results);
             continueOrExit();
         })
       } else if (answer.chooseDept === 'Legal'){
-        connection.query('SELECT * FROM employee WHERE role_id in (6, 7)', (err, results) => {
+        connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE role_id in (6, 7)', 
+        (err, results) => {
             if (err) throw err;
             console.table(results);
             continueOrExit();
         })
       } else if (answer.chooseDept === 'Sales'){
-        connection.query('SELECT * FROM employee WHERE role_id in (1, 2)', (err, results) => {
+        connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE role_id in (1, 2)', 
+        (err, results) => {
             if (err) throw err;
             console.table(results);
             continueOrExit();
