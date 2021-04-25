@@ -151,25 +151,25 @@ const viewByManager = () => {
     })
     .then((answer) => {
         if(answer.chooseManager === 'Ashley Rodriguez') {
-            connection.query('SELECT * FROM employee WHERE manager_id=3', (err, results) => {
+            connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE manager_id=3', (err, results) => {
                 if (err) throw err;
                 console.table(results);
                 continueOrExit();
             })
         } else if(answer.chooseManager === 'John Doe') {
-            connection.query('SELECT * FROM employee WHERE manager_id=1', (err, results) => {
+            connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE manager_id=1', (err, results) => {
                 if (err) throw err;
                 console.table(results);
                 continueOrExit();
             })
         } else if(answer.chooseManager === 'Mike Chan') {
-            connection.query('SELECT * FROM employee WHERE manager_id=2', (err, results) => {
+            connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE manager_id=2', (err, results) => {
                 if (err) throw err;
                 console.table(results);
                 continueOrExit();
             })
         } else if(answer.chooseManager === 'Sarah Lourd') {
-            connection.query('SELECT * FROM employee WHERE manager_id=6', (err, results) => {
+            connection.query('SELECT employee.id, employee.first_name, employee.last_name FROM employee WHERE manager_id=6', (err, results) => {
                 if (err) throw err;
                 console.table(results);
                 continueOrExit();
