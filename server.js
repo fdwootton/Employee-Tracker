@@ -199,6 +199,14 @@ const viewAllDepts = () => {
   })
 };
 
+const viewAllRoles = () => {
+  connection.query(`SELECT role.id, role.title FROM role`, (err, results) => {
+      if (err) throw err;
+      console.table(results);
+      continueOrExit();
+  })
+};
+
 
 
 const addEmployee = () => {
