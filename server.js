@@ -28,6 +28,8 @@ const start = () => {
         choices: ['View All Employees', 
         'View All Employees By Department', 
         'View All Employees By Manager',
+        'View All Departments',
+        'View All Roles',
         'Add Employee',
         'Add Role',
         'Add Department', 
@@ -41,6 +43,10 @@ const start = () => {
           viewByDept();
         } else if (answer.chooseAction === 'View All Employees By Manager'){
           viewByManager();
+        } else if (answer.chooseAction === 'View All Departments'){
+          viewAllDepts();
+        } else if (answer.chooseAction === 'View All Roles'){
+          viewAllRoles();
         } else if (answer.chooseAction === 'Add Employee'){
           addEmployee();
         } else if (answer.chooseAction === 'Add Role'){
@@ -185,6 +191,16 @@ const viewByManager = () => {
 };
 
 
+const viewAllDepts = () => {
+  connection.query(`SELECT * FROM department`, (err, results) => {
+      if (err) throw err;
+      console.table(results);
+      continueOrExit();
+  })
+};
+
+
+
 const addEmployee = () => {
     inquirer
       .prompt([
@@ -226,6 +242,51 @@ const addEmployee = () => {
         // console.log('Employee successfully added!')
         continueOrExit();
       });
+};
+
+const updateEmployeeRole = () => {
+  inquirer
+    .prompt([
+      {
+        name: 'first_name',
+        type: 'input',
+        message: "Enter employee's first name:",
+      },
+      {
+        name: 'last_name',
+        type: 'input',
+        message: "Enter employee's last name:",
+      },
+      {
+          name: 'role_id',
+          type: 'input',
+          message: "Enter employee's role ID:",
+      },
+      {
+          name: 'manager_id',
+          type: 'input',
+          message: "Enter employee's manager ID:",
+      }
+    ])
+    .then((answer) => {
+      connection.query(
+        'UPDATE auctions SET ? WHERE ?',
+            [
+              {
+                highest_bid: answer.bid,
+              },
+              {
+                id: chosenItem.id,
+              },
+            ],
+        (err, results) => {
+          if (err) throw err;
+        }
+      );
+      
+      // console.log('Employee successfully added!')
+      continueOrExit();
+    });
 };
 
 
