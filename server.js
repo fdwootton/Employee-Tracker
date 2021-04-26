@@ -12,6 +12,13 @@ const connection = mysql.createConnection({
 });
 
 
+connection.connect((err) => {
+  if (err) throw err;
+  console.log(`Welcome to the Employee Tracker!`);
+  start();
+});
+
+
 const start = () => {
     inquirer
       .prompt({
@@ -207,7 +214,7 @@ const addEmployee = () => {
       .then((answer) => {
         connection.query(
           `INSERT INTO employee (first_name, last_name, manager_id, role_id)
-          VALUES (${answer.employeeFirstName}, ${answer.employeeLastName}, ${answer.employeeManager}, ${answer.updateEmployeeRole})`,
+          VALUES ("${answer.employeeFirstName}", "${answer.employeeLastName}", "${answer.employeeManager}", "${answer.updateEmployeeRole}")`,
           (err, results) => {
             if (err) throw err;
             console.log(results);
@@ -220,8 +227,13 @@ const addEmployee = () => {
 };
 
 
-connection.connect((err) => {
-    if (err) throw err;
-    console.log(`Welcome to the Employee Tracker!`);
-    start();
-});
+const getRoles = () => {
+  return new Promise(function(resolve, reject){
+    connection.query('SELECT role.title FROM role', (err, results) => {
+      if (err) reject(new Error("there was an error"));
+      resolve(results)
+    })
+  })
+}
+
+
