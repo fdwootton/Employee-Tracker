@@ -189,32 +189,35 @@ const addEmployee = () => {
     inquirer
       .prompt([
         {
-          name: 'employeeFirstName',
+          name: 'first_name',
           type: 'input',
           message: "Enter employee's first name:",
         },
         {
-          name: 'employeeLastName',
+          name: 'last_name',
           type: 'input',
           message: "Enter employee's last name:",
         },
         {
-            name: 'employeeRole',
-            type: 'list',
-            message: "Select employee's role ID:",
-            choices: [1, 2, 3, 4, 5, 6, 7]
+            name: 'role_id',
+            type: 'input',
+            message: "Enter employee's role ID:",
         },
         {
-            name: 'employeeManager',
-            type: 'list',
-            message: "Select employee's manager ID:",
-            choices: [1, 2, 3, 4]
+            name: 'manager_id',
+            type: 'input',
+            message: "Enter employee's manager ID:",
         }
       ])
       .then((answer) => {
         connection.query(
-          `INSERT INTO employee (first_name, last_name, manager_id, role_id)
-          VALUES ("${answer.employeeFirstName}", "${answer.employeeLastName}", "${answer.employeeManager}", "${answer.updateEmployeeRole}")`,
+          'INSERT INTO employee SET ?',
+        {
+          first_name: answer.first_name,
+          last_name: answer.last_name,
+          manager_id: answer.manager_id,
+          role_id: answer.role_id,
+        },
           (err, results) => {
             if (err) throw err;
             console.log(results);
