@@ -220,7 +220,6 @@ const addEmployee = () => {
         },
           (err, results) => {
             if (err) throw err;
-            console.log(results);
           }
         );
         
