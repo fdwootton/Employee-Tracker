@@ -259,7 +259,7 @@ const addRole = () => {
       {
         name: 'title',
         type: 'input',
-        message: "Enter new role:",
+        message: "Enter title of new role:",
       },
       {
         name: 'salary',
@@ -290,57 +290,93 @@ const addRole = () => {
     });
 };
 
-const updateEmployeeRole = () => {
+
+const addDept = () => {
   inquirer
     .prompt([
       {
-        name: 'first_name',
+        name: 'name',
         type: 'input',
-        message: "Enter employee's first name:",
+        message: "Enter name of new department:",
       },
-      {
-        name: 'last_name',
-        type: 'input',
-        message: "Enter employee's last name:",
-      },
-      {
-          name: 'role_id',
-          type: 'input',
-          message: "Enter employee's role ID:",
-      },
-      {
-          name: 'manager_id',
-          type: 'input',
-          message: "Enter employee's manager ID:",
-      }
     ])
     .then((answer) => {
       connection.query(
-        'UPDATE auctions SET ? WHERE ?',
-            [
-              {
-                highest_bid: answer.bid,
-              },
-              {
-                id: chosenItem.id,
-              },
-            ],
+        'INSERT INTO department SET ?',
+      {
+        name: answer.name,
+      },
         (err, results) => {
           if (err) throw err;
         }
       );
       
-      // console.log('Employee successfully added!')
+      console.log('Department successfully added!');
       continueOrExit();
     });
 };
+
+
+// const updateEmployeeRole = () => {
+
+//   const roles = getRoles();
+//   const employees = getEmployees();
+//   //get all employees
+//   //get all roles
+
+//   inquirer
+//     .prompt([
+//       {
+//         name: 'employee_name',
+//         type: 'list',
+//         message: "Select an employee to update:",
+//         choices: [employees], //results from get all employees
+//       },
+//       {
+//         name: 'employee_role',
+//         type: 'list',
+//         message: "Select a new role:",
+//         choices: [roles], //results from get all roles
+//       },
+//     ])
+//     .then((answer) => {
+//       connection.query(
+//         'UPDATE employee SET ? WHERE ?',
+//             [
+//               {
+//                 highest_bid: answer.employee_role,
+//               },
+//               {
+//                 id: chosenItem.id,
+//               },
+//             ],
+//         (err, results) => {
+//           if (err) throw err;
+//         }
+//       );
+      
+//       // console.log('Employee role successfully updated!')
+//       continueOrExit();
+//     });
+// };
 
 
 const getRoles = () => {
   return new Promise(function(resolve, reject){
     connection.query('SELECT role.title FROM role', (err, results) => {
       if (err) reject(new Error("there was an error"));
-      resolve(results)
+      console.log(results);
+      resolve(results);
+    })
+  })
+}
+
+const getEmployees = () => {
+  return new Promise(function(resolve, reject){
+    connection.query('SELECT CONCAT(employee.first_name, " ", employee.last_name) AS name FROM employee', (err, results) => {
+      if (err) reject(new Error("there was an error"));
+      console.log(results);
+      resolve(results);
     })
   })
 }
