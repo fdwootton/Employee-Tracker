@@ -247,9 +247,47 @@ const addEmployee = () => {
           }
         );
         
-        // console.log('Employee successfully added!')
+        console.log('Employee successfully added!');
         continueOrExit();
       });
+};
+
+
+const addRole = () => {
+  inquirer
+    .prompt([
+      {
+        name: 'title',
+        type: 'input',
+        message: "Enter new role:",
+      },
+      {
+        name: 'salary',
+        type: 'input',
+        message: "Enter salary of role:",
+      },
+      {
+          name: 'department_id',
+          type: 'input',
+          message: "Enter department ID of role:",
+      },
+    ])
+    .then((answer) => {
+      connection.query(
+        'INSERT INTO role SET ?',
+      {
+        title: answer.title,
+        salary: answer.salary,
+        department_id: answer.department_id,
+      },
+        (err, results) => {
+          if (err) throw err;
+        }
+      );
+      
+      console.log('Role successfully added!');
+      continueOrExit();
+    });
 };
 
 const updateEmployeeRole = () => {
