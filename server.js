@@ -330,13 +330,13 @@ const addDept = () => {
 //         name: 'employee_name',
 //         type: 'list',
 //         message: "Select an employee to update:",
-//         choices: [employees], //results from get all employees
+//         choices: [employees], //results from get all employees //map
 //       },
 //       {
 //         name: 'employee_role',
 //         type: 'list',
 //         message: "Select a new role:",
-//         choices: [roles], //results from get all roles
+//         choices: [roles], //results from get all roles //map
 //       },
 //     ])
 //     .then((answer) => {
@@ -344,10 +344,10 @@ const addDept = () => {
 //         'UPDATE employee SET ? WHERE ?',
 //             [
 //               {
-//                 highest_bid: answer.employee_role,
+//                 ???: answer.employee_role,
 //               },
 //               {
-//                 id: chosenItem.id,
+//                 ???: ???,
 //               },
 //             ],
 //         (err, results) => {
