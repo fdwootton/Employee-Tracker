@@ -11,7 +11,7 @@
 
   ## **Installation**
   Run "npm i" to install all necessary dependencies.<br/>
-  Copy and paste the contents of schema.sql into MySQL Workbench.
+  Copy and paste the contents of schema.sql into MySQL Workbench and execute to create a new database.
 
 
   ## **Usage**
