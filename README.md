@@ -1,7 +1,7 @@
 # Employee Tracker
   ![badge](https://img.shields.io/badge/license-MIT-brightgreen)<br />
   ## **Description**
-  This application allows the user to access and edit employee data
+  This application allows the user to access and edit employee data.  The user is able to view all employees, roles, and departments.  The user can parse the data by only viewing employees by department or role. The user can also add employees, roles, or departments to the database.
 
   ## **Table of Contents**
   - [Installation](#installation)
@@ -10,10 +10,13 @@
   - [Questions](#questions)
 
   ## **Installation**
-  run "npm i" to install all necessary dependencies
+  Run "npm i" to install all necessary dependencies.<br/>
+  Copy and paste the contents of schema.sql into MySQL Workbench.
+
 
   ## **Usage**
-  Create database in mySQL
+  
+  Click [**HERE**](https://drive.google.com/file/d/1cADxM29E48SMkouLvPan1OYEMSp4Zd9V/view) for Employee-Tracker Demo 
 
   ## **License**
   ![badge](https://img.shields.io/badge/license-MIT-brightgreen)<br/>
